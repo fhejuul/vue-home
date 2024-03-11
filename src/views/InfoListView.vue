@@ -69,9 +69,13 @@ onBeforeUnmount(() => {
   <h1>Test af infoscreen</h1>
         <div v-if="courses">
           <div>
-            <InfoLine v-for="line in listData" :line="line"></InfoLine>
-          </div>
-          <p>{{ currentPage }} / {{ lastPage }}</p>
+            <table>
+              <thead>
+                <InfoLine v-for="line in listData" :line="line"></InfoLine>
+              </thead>
+            </table>
+            </div>
+            <p>{{ currentPage }} / {{ lastPage }}</p>
         </div>
 </template>
 
