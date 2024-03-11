@@ -2,11 +2,13 @@
 import { ref, onMounted } from 'vue'
 import infoList from '../components/infoList.vue';
 
+const location = "koege"
+
 </script>
 
 <template>
-  <h1>Events For Good</h1>
-  <infoList></infoList>
+  <h1>Infoscreen K!</h1>
+  <infoList :location="location"></infoList>
 </template>
 
 <style scoped>
