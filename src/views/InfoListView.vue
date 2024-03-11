@@ -1,15 +1,17 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import EventCard from '@/components/EventCard.vue'
-import EventService from '@/services/EventService.js'
+import InfoService from '../services/InfoService'
+import InfoLine from '../components/InfoLine.vue'
 
-const events = ref(null)
+
+
+const courses = ref(null)
 
 onMounted(() => {
-  EventService.getEvents()
+  InfoService.getLocation()
     .then((response) => {
-      events.value = response.data
-      console.log(events.value)
+      courses.value = response.data
+      console.log(courses.value)
     })
     .catch((error) => {
       console.log(error)
@@ -18,10 +20,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Events For Good</h1>
-  <div class="events">
+  <h1>Test af infoscreen</h1>
+  <InfoLine v-for="line in courses" :line="line"></InfoLine>
+  <!-- <div class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
-  </div>
+  </div> -->
 </template>
 
 <style scoped>
