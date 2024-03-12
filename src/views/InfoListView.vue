@@ -4,10 +4,11 @@ import InfoService from '../services/InfoService'
 import InfoLine from '../components/InfoLine.vue'
 
 let timer = null
+let filterdCourses = []
+const showPastStart = 100
 const paginationInterval = 100000 // Make dynamic or env variable
 const linesToShow = 10 // Make dynamic or env variable
 const courses = ref(null)
-let filterdCourses = [];
 const listData = ref([])
 const start = ref(0)
 const end = ref(0)
@@ -46,11 +47,21 @@ function turnPage(){
   }
 }
 
+function filterByTime(data){
+  let timestampNow = null 
+  let dateTimeISO = null
+  for(const line in data){
+    dateTimeISO = (line.Dato.split('').reverse().join('')) + ' ' + line.Starttid
+    console.log('Test af dateTime' + dateTimeISO)
+  }
+}
+
 
 onMounted(() => {
   InfoService.getLocation()
     .then((response) => {
-
+      filterByTime(response.data)
+      console.log('From on mounted')
       courses.value = response.data
       start.value = 0
       turnPage()

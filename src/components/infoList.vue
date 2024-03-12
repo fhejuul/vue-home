@@ -9,21 +9,51 @@ defineProps({
     required: true,
   },
 })
-
-let timer = null
+const filteredCourses = []
+const showPastStart = 8600000
+let timerPageTurn = null
+let timerDataRefresh = null
+const dataRefreshInterval = 120000
 const paginationInterval = 10000 // Make dynamic or env variable
 const linesToShow = 10 // Make dynamic or env variable
 const courses = ref(null)
-const listData = ref([])
+const displayData = ref([])
 const start = ref(0)
 const end = ref(0)
 const currentPage = ref(0)
 const lastPage = ref(0)
 
-function startTimer(){
-  timer = setInterval(() => {
+function startTimerPageTurn(){
+  // Initiate turnpage first time timer is started
+  turnPage()
+  timerPageTurn = setInterval(() => {
     turnPage()
   }, paginationInterval)
+}
+
+function startTimerDataRefresh(){
+  // Initiate first data refresh
+  refreshData()
+  timerDataRefresh = setInterval(() => {
+    refreshData()
+  }, dataRefreshInterval)
+}
+
+// Fetch data from API
+function refreshData(){
+  console.log('RefreshingData')
+  InfoService.getLocation(location)
+    .then((response) => {
+      filterByTime(response.data)
+      courses.value = filteredCourses.slice()
+      console.log(courses.value)
+      if(!timerPageTurn){
+        startTimerPageTurn()
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 function setPageNumber() {
@@ -31,45 +61,61 @@ function setPageNumber() {
   lastPage.value = Math.ceil(courses.value.length/linesToShow)
 }
 
+// Checks if pagination is needed and loads data into displayData
 function turnPage(){
-  if(courses && courses.value.length > linesToShow){
-    setPageNumber()
-    end.value += Math.min((courses.value.length-start.value), linesToShow)
-    try {
-        listData.value = courses.value.slice(start.value, end.value)
-    } catch (error) {
-      console.log(error)
+  try {
+    if(courses && courses.value.length > linesToShow){
+      setPageNumber()
+      end.value += Math.min((courses.value.length-start.value), linesToShow)
+          displayData.value = courses.value.slice(start.value, end.value)
+  
+      if(start.value < (end.value-(linesToShow-1))){
+          start.value += 10
+      } else {
+          start.value = 0
+          end.value = 0
+      }
+      } else {
+          displayData.value = courses.value
+      } 
+  } catch (error) {
+    console.log(error)
       start.value = 0
       end.value = 0
-    }
-    
-    if(start.value < (end.value-(linesToShow-1))){
-        start.value += 10
-    } else {
-        start.value = 0
-        end.value = 0
-    }
-    } else {
-        listData.value = courses.value
-    }
+  }
 }
 
+function filterByTime(data){
+  let timestampNow = Date.now()
+  let day = null
+  let month = null
+  let year = null 
+  let timestampCourse = null
+
+  // Length = 0 clears all data 
+  filteredCourses.length = 0
+  // Format date and time into ISO, then convert to timestamp and compare to current timestamp. Filters courses to display
+  for (let i = 0; i < data.length; i++) {
+    const element = data[i];
+    day = element.Dato.substring(0,2)
+    month = element.Dato.substring(3,5)
+    year = element.Dato.substring(6)
+    timestampCourse = Date.parse(year + '-' + month + '-' + day + ' ' + element.Starttid)
+    if((timestampNow - timestampCourse) < showPastStart) {
+      filteredCourses.push(element)
+    }
+  }
+  console.log(filteredCourses)
+}
 
 onMounted(() => {
-  InfoService.getLocation(location)
-    .then((response) => {
-      courses.value = response.data
-      start.value = 0
-      turnPage()
-      startTimer()
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  startTimerDataRefresh()
+
 })
 
 onBeforeUnmount(() => {
-  clearInterval(timer)
+  clearInterval(timerPageTurn)
+  clearInterval(timerDataRefresh)
 })
 
 </script>
