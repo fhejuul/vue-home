@@ -126,7 +126,7 @@ onBeforeUnmount(() => {
           <div>
             <table>
               <thead>
-                <InfoLine v-for="line in listData" :line="line"></InfoLine>
+                <InfoLine v-for="line in displayData" :line="line"></InfoLine>
               </thead>
             </table>
             </div>
