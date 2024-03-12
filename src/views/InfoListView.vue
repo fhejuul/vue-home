@@ -7,6 +7,7 @@ let timer = null
 const paginationInterval = 100000 // Make dynamic or env variable
 const linesToShow = 10 // Make dynamic or env variable
 const courses = ref(null)
+let filterdCourses = [];
 const listData = ref([])
 const start = ref(0)
 const end = ref(0)
@@ -49,6 +50,7 @@ function turnPage(){
 onMounted(() => {
   InfoService.getLocation()
     .then((response) => {
+
       courses.value = response.data
       start.value = 0
       turnPage()
