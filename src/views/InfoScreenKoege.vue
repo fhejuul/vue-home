@@ -16,7 +16,7 @@ const currentTime = ref(new Date())
 onMounted(() => {
   currentTime.value = new Date()
   console.log("OnMounted ICK")
-  console.log({courseTimeout} + 'Maybe')
+  console.log(courseTimeout.value + 'Maybe')
   //console.log(courseTimeout)
   // ParamsService.getParams()
   //   .then((response) => {

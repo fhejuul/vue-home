@@ -7,6 +7,9 @@ export const useSettingsStore = defineStore("settings", {
         linesPerPage: 10,
         paginationInterval: 10000,
     }),
+    actions: {
+        
+    }
 
     // const courseTimeout = ref()
     // const dataRefreshInterval = ref()

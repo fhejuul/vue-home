@@ -3,7 +3,7 @@ import EventListView from '../views/EventListView.vue'
 import EventDetailsView from '../views/EventDetailsView.vue'
 import AboutView from '../views/AboutView.vue'
 import InfoListView from '../views/InfoListView.vue'
-import infoScreenKoege from '../views/infoScreenKoege.vue'
+import InfoScreenKoege from '../views/InfoScreenKoege.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'infoScreenKoege',
-      component: infoScreenKoege,
+      component: InfoScreenKoege,
     },
     {
       path: '/event/:id',
