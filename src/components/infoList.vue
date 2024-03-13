@@ -10,12 +10,12 @@ defineProps({
   },
 })
 const filteredCourses = []
-const showPastStart = 8600000
+const showPastStart = 19600000 //Paas in as prop
 let timerPageTurn = null
 let timerDataRefresh = null
-const dataRefreshInterval = 120000
-const paginationInterval = 10000 // Make dynamic or env variable
-const linesToShow = 10 // Make dynamic or env variable
+const dataRefreshInterval = 120000 // Paas in as prop
+const paginationInterval = 10000 // Paas in as prop
+const linesToShow = 10 // Paas in as prop
 const courses = ref(null)
 const displayData = ref([])
 const start = ref(0)
