@@ -2,13 +2,13 @@ import { defineStore } from "pinia";
 
 export const useSettingsStore = defineStore("settings", {
     state: () => ({
-        courseTimeout: 'This makes no sense',
+        courseTimeout: 960000,
         dataRefreshInterval: 80000,
         linesPerPage: 10,
         paginationInterval: 10000,
     }),
     actions: {
-        
+
     }
 
     // const courseTimeout = ref()

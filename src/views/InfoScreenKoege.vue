@@ -5,7 +5,7 @@ import infoList from '../components/infoList.vue'
 import ParamsService from '../services/ParamsService'
 import { storeToRefs } from 'pinia';
 
-const store = useSettingsStore
+const store = useSettingsStore()
 
 const { courseTimeout } = storeToRefs(store)
 const location = "koege"
@@ -39,4 +39,4 @@ onMounted(() => {
 
 <style scoped>
 
-</style>
+</style>../components/InfoList.vue

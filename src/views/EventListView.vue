@@ -11,4 +11,4 @@ import infoList from '../components/infoList.vue';
 
 <style scoped>
 
-</style>
+</style>../components/InfoList.vue
