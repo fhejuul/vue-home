@@ -1,14 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useSettingsStore } from '../stores/settings';
+import { useSettingsStore } from '../stores/settings'
 import infoList from '../components/infoList.vue'
-import ParamsService from '../services/ParamsService'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 
 const store = useSettingsStore()
 
 const { courseTimeout } = storeToRefs(store)
-const location = "koege"
+const location = "roskilde"
 const currentTime = ref(new Date())
 //const paramsTest = ref([]) // Make a default object to pass in with values from constants
 
@@ -17,6 +16,7 @@ onMounted(() => {
   currentTime.value = new Date()
   console.log("OnMounted ICK")
   console.log(courseTimeout.value + 'Maybe')
+  store.getData()
   //console.log(courseTimeout)
   // ParamsService.getParams()
   //   .then((response) => {
@@ -39,4 +39,4 @@ onMounted(() => {
 
 <style scoped>
 
-</style>../components/InfoList.vue
+</style>../components/InfoList.vue../services/settingsService

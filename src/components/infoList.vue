@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount} from 'vue'
+import { useSettingsStore } from '../stores/settings'
 import InfoService from '../services/InfoService'
 import InfoLine from '../components/InfoLine.vue'
+import { storeToRefs } from 'pinia'
 
 defineProps({
   location: {
@@ -13,6 +15,11 @@ defineProps({
   //   required: true,
   // },
 })
+
+const store = useSettingsStore()
+
+const { testObj } = storeToRefs(store)
+
 const filteredCourses = []
 const courseTimeout = 19600000 //Paas in as prop
 let timerPageTurn = null
@@ -136,6 +143,7 @@ onBeforeUnmount(() => {
             </div>
             <p v-if="courses.length > linesPerPage">{{ currentPage }} / {{ lastPage }}</p>
         </div>
+        <p>{{ testObj[location].testElement }}</p>
         <!-- <div>
           {{ paramsTest[0].dataRefreshInterval }}
         </div> -->
