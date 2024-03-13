@@ -8,14 +8,18 @@ defineProps({
     type: String,
     required: true,
   },
+  paramsTest: {
+    type: Array,
+    required: true,
+  },
 })
 const filteredCourses = []
-const showPastStart = 19600000 //Paas in as prop
+const courseTimeout = 19600000 //Paas in as prop
 let timerPageTurn = null
 let timerDataRefresh = null
 const dataRefreshInterval = 120000 // Paas in as prop
 const paginationInterval = 10000 // Paas in as prop
-const linesToShow = 10 // Paas in as prop
+const linesPerPage = 10 // Paas in as prop
 const courses = ref(null)
 const displayData = ref([])
 const start = ref(0)
@@ -57,19 +61,19 @@ function refreshData(){
 }
 
 function setPageNumber() {
-  currentPage.value = Math.ceil((end.value+1)/linesToShow)
-  lastPage.value = Math.ceil(courses.value.length/linesToShow)
+  currentPage.value = Math.ceil((end.value+1)/linesPerPage)
+  lastPage.value = Math.ceil(courses.value.length/linesPerPage)
 }
 
 // Checks if pagination is needed and loads data into displayData
 function turnPage(){
   try {
-    if(courses && courses.value.length > linesToShow){
+    if(courses && courses.value.length > linesPerPage){
       setPageNumber()
-      end.value += Math.min((courses.value.length-start.value), linesToShow)
+      end.value += Math.min((courses.value.length-start.value), linesPerPage)
           displayData.value = courses.value.slice(start.value, end.value)
   
-      if(start.value < (end.value-(linesToShow-1))){
+      if(start.value < (end.value-(linesPerPage-1))){
           start.value += 10
       } else {
           start.value = 0
@@ -101,7 +105,7 @@ function filterByTime(data){
     month = element.Dato.substring(3,5)
     year = element.Dato.substring(6)
     timestampCourse = Date.parse(year + '-' + month + '-' + day + ' ' + element.Starttid)
-    if((timestampNow - timestampCourse) < showPastStart) {
+    if((timestampNow - timestampCourse) < courseTimeout) {
       filteredCourses.push(element)
     }
   }
@@ -130,7 +134,10 @@ onBeforeUnmount(() => {
               </thead>
             </table>
             </div>
-            <p v-if="courses.length > linesToShow">{{ currentPage }} / {{ lastPage }}</p>
+            <p v-if="courses.length > linesPerPage">{{ currentPage }} / {{ lastPage }}</p>
+        </div>
+        <div>
+          {{ paramsTest[0].dataRefreshInterval }}
         </div>
 </template>
 

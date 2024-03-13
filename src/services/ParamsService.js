@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: 'https://apps.amujuul.dk/api/infoskaerm',
+  baseURL: 'https://raw.githubusercontent.com/fhejuul/json-img-test/main',
   withCredentials: false,
   headers: {
     Accept: 'application/json',
@@ -10,7 +10,7 @@ const apiClient = axios.create({
 })
 
 export default {
-  getLocation(name) {
-    return apiClient.get('/4')
+  getParams() {
+    return apiClient.get('/settings.json')
   },
 }
