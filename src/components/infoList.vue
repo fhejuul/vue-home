@@ -8,10 +8,10 @@ defineProps({
     type: String,
     required: true,
   },
-  paramsTest: {
-    type: Array,
-    required: true,
-  },
+  // paramsTest: {
+  //   type: Array,
+  //   required: true,
+  // },
 })
 const filteredCourses = []
 const courseTimeout = 19600000 //Paas in as prop
@@ -136,9 +136,9 @@ onBeforeUnmount(() => {
             </div>
             <p v-if="courses.length > linesPerPage">{{ currentPage }} / {{ lastPage }}</p>
         </div>
-        <div>
+        <!-- <div>
           {{ paramsTest[0].dataRefreshInterval }}
-        </div>
+        </div> -->
 </template>
 
 <style scoped>
