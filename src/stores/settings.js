@@ -7,76 +7,75 @@ export const useSettingsStore = defineStore("settings", {
         dataRefreshInterval: 80000,
         linesPerPage: 10,
         paginationInterval: 10000,
-        testObj: {
-            koege: {
-                testElement: 69,
-            },
-            roskilde: {
-                testElement: 99,
-            }
+        locations: {
+            HVIDOVRE: 'hvidovre',
+            HOLBAEK: 'holbaek',
+            KOEGE: 'koege',
+            ROSKILDEADMIN: 'roskildeAdmin',
+            ROSKILDEB: 'roskildeB'
         },
         dataFromApi: {
             hvidovre: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 10
+                paginationInterval: 10000
             },
             holbaek: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100
+                paginationInterval: 100000
             },
             koege: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 360000000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100
+                paginationInterval: 100000
             },
             roskildeAdmin: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100
+                paginationInterval: 100000
             },
             roskildeB: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100
+                paginationInterval: 100000
             },
         },
         defaultValues: {
             hvidovre: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 10
+                paginationInterval: 10000
             },
             holbaek: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100
+                paginationInterval: 10000
             },
             koege: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
                 paginationInterval: 100
             },
             roskildeAdmin: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100
+                paginationInterval: 10000
             },
             roskildeB: {
-                courseTimeout: 3600,
-                dataRefreshInterval: 360,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100
+                paginationInterval: 10000
             },
         },
         
@@ -85,17 +84,17 @@ export const useSettingsStore = defineStore("settings", {
         getData() {
             settingsService.getParams()
                 .then((response) => {
-                    console.log(response)
+                    console.log(response.data)
                 })
                 .catch((error) => {
                 console.log(error)
                 })
         },
-        setDefaultValues() {
+        setApiValues() {
+
 
         }
 
-    }
-
+    },
 
 })

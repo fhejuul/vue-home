@@ -1,42 +1,51 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useSettingsStore } from '../stores/settings'
+import { useCoursesStore } from '../stores/courses'
 import infoList from '../components/infoList.vue'
 import { storeToRefs } from 'pinia'
 
 const store = useSettingsStore()
+const storeCourses = useCoursesStore()
+const { locations, dataFromApi } = storeToRefs(store)
+const { initialized } = storeToRefs(storeCourses)
 
-const { courseTimeout } = storeToRefs(store)
-const location = "roskilde"
+const location = locations.value.KOEGE
 const currentTime = ref(new Date())
-//const paramsTest = ref([]) // Make a default object to pass in with values from constants
 
+let timerDataRefresh = null
 
 onMounted(() => {
+  console.log('InfoScreenKoege onmounted')
   currentTime.value = new Date()
-  console.log("OnMounted ICK")
-  console.log(courseTimeout.value + 'Maybe')
+  storeCourses.setLocation('koege')
+  storeCourses.getData()
   store.getData()
-  //console.log(courseTimeout)
-  // ParamsService.getParams()
-  //   .then((response) => {
-  //     console.log(response.data)
-  //     paramsTest.value = response.data
-  //   })
-  //   .catch((error) => {
-  //     console.log(error)
-  //   })
+  startTimerDataRefresh()
+  //storeCourses.setPaginatedSlice()
+  storeCourses.setInitialized(true)
+  console.log(initialized)
 })
+
+function startTimerDataRefresh(){
+  timerDataRefresh = setInterval(() => {
+    refreshData()
+  }, dataFromApi.value[location].dataRefreshInterval)
+}
+
+function refreshData() {
+  storeCourses.getData()
+}
 
 </script>
 
 <template>
   <h1>Infoscreen Keep!</h1>
-  <p>{{ currentTime }}</p>
-  <infoList :location="location"></infoList>
-  <p>{{ courseTimeout }} test</p>
+  <div v-if="initialized">
+    <infoList :location="location"></infoList>
+  </div>
 </template>
 
 <style scoped>
 
-</style>../components/InfoList.vue../services/settingsService
+</style>

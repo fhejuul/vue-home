@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount} from 'vue'
-import InfoService from '../services/InfoService'
+import CourseService from '../services/CourseService'
 import InfoLine from '../components/InfoLine.vue'
 
 let timer = null

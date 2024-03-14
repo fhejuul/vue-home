@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount} from 'vue'
 import { useSettingsStore } from '../stores/settings'
-import InfoService from '../services/InfoService'
+import { useCoursesStore } from '../stores/courses'
+import CourseService from '../services/CourseService'
 import InfoLine from '../components/InfoLine.vue'
 import { storeToRefs } from 'pinia'
 
@@ -10,23 +11,17 @@ defineProps({
     type: String,
     required: true,
   },
-  // paramsTest: {
-  //   type: Array,
-  //   required: true,
-  // },
 })
 
 const store = useSettingsStore()
+const coursesStore = useCoursesStore()
 
-const { testObj } = storeToRefs(store)
-
-const filteredCourses = []
-const courseTimeout = 19600000 //Paas in as prop
+const { filteredCourses, paginatedSlice } = storeToRefs(coursesStore)
 let timerPageTurn = null
 let timerDataRefresh = null
 const dataRefreshInterval = 120000 // Paas in as prop
 const paginationInterval = 10000 // Paas in as prop
-const linesPerPage = 10 // Paas in as prop
+const linesPerPage = 4 // Paas in as prop
 const courses = ref(null)
 const displayData = ref([])
 const start = ref(0)
@@ -35,37 +30,11 @@ const currentPage = ref(0)
 const lastPage = ref(0)
 
 function startTimerPageTurn(){
-  // Initiate turnpage first time timer is started
-  turnPage()
   timerPageTurn = setInterval(() => {
     turnPage()
   }, paginationInterval)
 }
 
-function startTimerDataRefresh(){
-  // Initiate first data refresh
-  refreshData()
-  timerDataRefresh = setInterval(() => {
-    refreshData()
-  }, dataRefreshInterval)
-}
-
-// Fetch data from API
-function refreshData(){
-  console.log('RefreshingData')
-  InfoService.getLocation(location)
-    .then((response) => {
-      filterByTime(response.data)
-      courses.value = filteredCourses.slice()
-      console.log(courses.value)
-      if(!timerPageTurn){
-        startTimerPageTurn()
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
 
 function setPageNumber() {
   currentPage.value = Math.ceil((end.value+1)/linesPerPage)
@@ -74,11 +43,12 @@ function setPageNumber() {
 
 // Checks if pagination is needed and loads data into displayData
 function turnPage(){
+  console.log('Turnpage called')
   try {
-    if(courses && courses.value.length > linesPerPage){
+    if(paginatedSlice.value.length > linesPerPage){
       setPageNumber()
-      end.value += Math.min((courses.value.length-start.value), linesPerPage)
-          displayData.value = courses.value.slice(start.value, end.value)
+      end.value += Math.min((filteredCourses.value.length-start.value), linesPerPage)
+          displayData.value = filteredCourses.value.slice(start.value, end.value)
   
       if(start.value < (end.value-(linesPerPage-1))){
           start.value += 10
@@ -87,7 +57,9 @@ function turnPage(){
           end.value = 0
       }
       } else {
-          displayData.value = courses.value
+          displayData.value = filteredCourses.value
+          console.log(displayData.value)
+          console.log(filteredCourses.value)
       } 
   } catch (error) {
     console.log(error)
@@ -96,32 +68,8 @@ function turnPage(){
   }
 }
 
-function filterByTime(data){
-  let timestampNow = Date.now()
-  let day = null
-  let month = null
-  let year = null 
-  let timestampCourse = null
-
-  // Length = 0 clears all data 
-  filteredCourses.length = 0
-  // Format date and time into ISO, then convert to timestamp and compare to current timestamp. Filters courses to display
-  for (let i = 0; i < data.length; i++) {
-    const element = data[i];
-    day = element.Dato.substring(0,2)
-    month = element.Dato.substring(3,5)
-    year = element.Dato.substring(6)
-    timestampCourse = Date.parse(year + '-' + month + '-' + day + ' ' + element.Starttid)
-    if((timestampNow - timestampCourse) < courseTimeout) {
-      filteredCourses.push(element)
-    }
-  }
-  console.log(filteredCourses)
-}
-
 onMounted(() => {
-  startTimerDataRefresh()
-
+  turnPage()
 })
 
 onBeforeUnmount(() => {
@@ -133,20 +81,16 @@ onBeforeUnmount(() => {
 
 <template>
   <h1>Test af infoscreen</h1>
-        <div v-if="courses">
+        <div>
           <div>
             <table>
               <thead>
-                <InfoLine v-for="line in displayData" :line="line"></InfoLine>
+                <InfoLine v-for="line in paginatedSlice" :line="line"></InfoLine>
               </thead>
             </table>
             </div>
-            <p v-if="courses.length > linesPerPage">{{ currentPage }} / {{ lastPage }}</p>
+            <p v-if="paginatedSlice.length > linesPerPage">{{ currentPage }} / {{ lastPage }}</p>
         </div>
-        <p>{{ testObj[location].testElement }}</p>
-        <!-- <div>
-          {{ paramsTest[0].dataRefreshInterval }}
-        </div> -->
 </template>
 
 <style scoped>
