@@ -9,8 +9,15 @@ export const useCoursesStore = defineStore("courses", {
         paginatedSlice: [],
         start: 0,
         end: 0,
+        currentPage: 0,
+        totalPages: 1,
+        linesPerPage: 10,
+        paginationTime: 10000,
+        dataRefreshInterval: 360000,
+        courseTimeout: 3600000,
         location: '',
         initialized: false,
+        showPages: false,
         test: "Courses store"
     }),
     actions: {
@@ -19,22 +26,30 @@ export const useCoursesStore = defineStore("courses", {
         },
         getData() {
             courseService.getLocation(this.location)
-                .then((response) => {
-                    console.log(response)
-                    this.setFilterCourses(response.data, this.location)
+            .then((response) => {
+                this.currentPage = 1
+                this.setupParams()
+                this.setFilterCourses(response.data, this.location)
+                this.setTotalPages()
+                this.setPaginatedSlice()
                 })
                 .catch((error) => {
                 console.log(error)
                 })
         },
-        setFilterCourses(responseData) {
+        setupParams(){
             const storeSettings = useSettingsStore()
+            this.linesPerPage = storeSettings.dataFromApi[this.location].linesPerPage
+            this.paginationTime = storeSettings.dataFromApi[this.location].paginationInterval
+            this.dataRefreshInterval = storeSettings.dataFromApi[this.location].dataRefreshInterval
+            this.courseTimeout = storeSettings.dataFromApi[this.location].courseTimeout 
+        },
+        setFilterCourses(responseData) {
             let timestampNow = Date.now()
             let day = null
             let month = null
             let year = null 
             let timestampCourse = null
-            let courseTimeout = storeSettings.dataFromApi[this.location].courseTimeout 
             this.filteredCourses = []
             // Format date and time into ISO, then convert to timestamp and compare to current timestamp. Filters courses to display
             for (let i = 0; i < responseData.length; i++) {
@@ -43,31 +58,41 @@ export const useCoursesStore = defineStore("courses", {
               month = element.Dato.substring(3,5)
               year = element.Dato.substring(6)
               timestampCourse = Date.parse(year + '-' + month + '-' + day + ' ' + element.Starttid)
-              if((timestampNow - timestampCourse) < courseTimeout) {
+              if((timestampNow - timestampCourse) < this.courseTimeout) {
                 this.filteredCourses.push(element)
               }
             }
-            this.setPaginatedSlice()
+        },
+        setTotalPages(){
+            if(this.filteredCourses.length > this.linesPerPage){
+                this.totalPages = Math.ceil(this.filteredCourses.length/this.linesPerPage)
+                this.showPages = true
+            } else {
+                this.showPages(false)
+            }
         },
         setPaginatedSlice() {
-            const storeSettings = useSettingsStore()
-            var linesPerPage = 10 // storeSettings.dataFromApi[this.location].linesPerPage
-            console.log(this.filteredCourses.length)
-            if(this.filteredCourses.length > linesPerPage){
-                this.end += Math.min((this.filteredCourses.length-this.start), linesPerPage)
-                this.paginatedSlice = this.filteredCourses.slice(this.start, this.end)
-
-                if(this.start < (this.end - (linesPerPage-1))){
-                    this.start += 10
-                } else {
+            if(this.filteredCourses.length > this.linesPerPage){
+                if(this.start >= (this.filteredCourses.length-this.linesPerPage)){
+                    this.paginatedSlice = this.filteredCourses.slice(this.end)
                     this.start = 0
                     this.end = 0
+                } else {
+                    this.end += Math.min((this.filteredCourses.length-this.start), this.linesPerPage)
+                    this.paginatedSlice = this.filteredCourses.slice(this.start, this.end)
+                    this.start += this.linesPerPage
                 }
             } else {
                 this.paginatedSlice = this.filteredCourses.slice()
+            } 
+        },
+        turnPage(){
+            this.setPaginatedSlice()
+            if (this.currentPage >= this.totalPages) {
+                this.currentPage = 1
+            } else {
+                this.currentPage++
             }
-            console.log(this.paginatedSlice)
-            
         },
         setInitialized(value) {
             this.initialized = value

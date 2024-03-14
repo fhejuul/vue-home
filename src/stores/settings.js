@@ -30,7 +30,7 @@ export const useSettingsStore = defineStore("settings", {
             koege: {
                 courseTimeout: 360000000,
                 dataRefreshInterval: 360000,
-                linesPerPage: 10,
+                linesPerPage: 4,
                 paginationInterval: 100000
             },
             roskildeAdmin: {
