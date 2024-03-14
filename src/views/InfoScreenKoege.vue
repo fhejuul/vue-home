@@ -48,4 +48,4 @@ function refreshData() {
 
 <style scoped>
 
-</style>
+</style>../components/InfoList.vue
