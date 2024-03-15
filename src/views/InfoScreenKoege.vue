@@ -3,11 +3,12 @@ import { ref, onMounted } from 'vue'
 import { useSettingsStore } from '../stores/settings'
 import { useCoursesStore } from '../stores/courses'
 import infoList from '../components/infoList.vue'
+import marketingDisplay from '../components/marketingDisplay.vue'
 import { storeToRefs } from 'pinia'
 
 const store = useSettingsStore()
 const storeCourses = useCoursesStore()
-const { locations, dataFromApi } = storeToRefs(store)
+const { locations, dataFromApi, marketingToggle } = storeToRefs(store)
 const { initialized } = storeToRefs(storeCourses)
 
 const location = locations.value.KOEGE
@@ -39,6 +40,10 @@ function refreshData() {
   <h1>Infoscreen Keep!</h1>
   <div v-if="initialized">
     <infoList :location="location"></infoList>
+  </div>
+  <img src="../assets/images/koege.jpg" />
+  <div v-if="marketingToggle">
+    <marketingDisplay></marketingDisplay>
   </div>
 </template>
 

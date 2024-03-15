@@ -3,10 +3,7 @@ import settingsService from '../services/SettingsService'
 
 export const useSettingsStore = defineStore("settings", {
     state: () => ({
-        courseTimeout: 960000,
-        dataRefreshInterval: 80000,
-        linesPerPage: 10,
-        paginationInterval: 10000,
+        marketingToggle: true,
         locations: {
             HVIDOVRE: 'hvidovre',
             HOLBAEK: 'holbaek',
@@ -15,6 +12,18 @@ export const useSettingsStore = defineStore("settings", {
             ROSKILDEB: 'roskildeB'
         },
         dataFromApi: {
+            global: {
+                useGlobal: true,
+                courseTimeout: 3600000,
+                dataRefreshInterval: 360000,
+                linesPerPage: 10,
+                paginationInterval: 10000,
+                showMarketing: true,
+                link: 'https://raw.githubusercontent.com/fhejuul/json-img-test/main/marketingKoege.gif',
+                showDuration: 0,
+                supress: [{}],
+                showDates: {}
+            },
             hvidovre: {
                 courseTimeout: 3600000,
                 dataRefreshInterval: 360000,
@@ -25,25 +34,25 @@ export const useSettingsStore = defineStore("settings", {
                 courseTimeout: 3600000,
                 dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100000
+                paginationInterval: 10000
             },
             koege: {
                 courseTimeout: 360000000,
                 dataRefreshInterval: 360000,
                 linesPerPage: 4,
-                paginationInterval: 100000
+                paginationInterval: 10000
             },
             roskildeAdmin: {
                 courseTimeout: 3600000,
                 dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100000
+                paginationInterval: 10000
             },
             roskildeB: {
                 courseTimeout: 3600000,
                 dataRefreshInterval: 360000,
                 linesPerPage: 10,
-                paginationInterval: 100000
+                paginationInterval: 10000
             },
         },
         defaultValues: {
