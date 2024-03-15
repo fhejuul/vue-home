@@ -32,6 +32,7 @@ export const useCoursesStore = defineStore("courses", {
                 this.setFilterCourses(response.data, this.location)
                 this.setTotalPages()
                 this.setPaginatedSlice()
+                this.initialized = true
                 })
                 .catch((error) => {
                 console.log(error)

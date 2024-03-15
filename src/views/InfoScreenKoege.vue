@@ -16,15 +16,11 @@ const currentTime = ref(new Date())
 let timerDataRefresh = null
 
 onMounted(() => {
-  console.log('InfoScreenKoege onmounted')
   currentTime.value = new Date()
-  storeCourses.setLocation('koege')
+  storeCourses.setLocation(location)
+  //store.getData() Todo: wait for backend
   storeCourses.getData()
-  store.getData()
   startTimerDataRefresh()
-  //storeCourses.setPaginatedSlice()
-  storeCourses.setInitialized(true)
-  console.log(initialized)
 })
 
 function startTimerDataRefresh(){
@@ -48,4 +44,4 @@ function refreshData() {
 
 <style scoped>
 
-</style>../components/InfoList.vue
+</style>

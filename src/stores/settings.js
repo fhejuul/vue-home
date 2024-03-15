@@ -81,19 +81,20 @@ export const useSettingsStore = defineStore("settings", {
         
     }),
     actions: {
-        getData() {
-            settingsService.getParams()
-                .then((response) => {
-                    console.log(response.data)
-                })
-                .catch((error) => {
-                console.log(error)
-                })
-        },
-        setApiValues() {
+        // Todo: Implement when backend service is ready
+        // getData() {
+        //     settingsService.getParams()
+        //         .then((response) => {
+
+        //         })
+        //         .catch((error) => {
+        //         console.log(error)
+        //         })
+        // },
+        // setApiValues() {
 
 
-        }
+        // }
 
     },
 
