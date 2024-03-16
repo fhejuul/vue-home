@@ -18,7 +18,51 @@ export const useCoursesStore = defineStore("courses", {
         location: '',
         initialized: false,
         showPages: false,
-        test: "Courses store"
+        test: "Courses store",
+        mockData: [
+            {
+                "Dato": "14-03-2024",
+                "Starttid": "08:00:00",
+                "Lokale": "Lok. H8",
+                "Kategori": "BAB-3A",
+                "Kursusnavn": "Befordring af fysisk handicappede med liftbil"
+            },
+            {
+                "Dato": "14-03-2024",
+                "Starttid": "08:00:00",
+                "Lokale": "Lok. H8",
+                "Kategori": "BABB",
+                "Kursusnavn": "BAB 1-2-3A Befordring Af Bevægelseshæmmede"
+            },
+            {
+                "Dato": "14-03-2024",
+                "Starttid": "08:00:00",
+                "Lokale": "Lok. H10",
+                "Kategori": "GT",
+                "Kursusnavn": "Gaffeltruck Certifikatkursus B"
+            },
+            {
+                "Dato": "14-03-2024",
+                "Starttid": "08:00:00",
+                "Lokale": "Lok. H3",
+                "Kategori": "C",
+                "Kursusnavn": "Godstransport med lastbil"
+            },
+            {
+                "Dato": "14-03-2024",
+                "Starttid": "08:00:00",
+                "Lokale": "Lok. H3",
+                "Kategori": "D/EP",
+                "Kursusnavn": "Buskørekort"
+            },
+            {
+                "Dato": "14-03-2024",
+                "Starttid": "08:00:00",
+                "Lokale": "Lok. H3",
+                "Kategori": "TK",
+                "Kursusnavn": "Kvalifikation til persontransport i mindre køretøj (48652) - Taxikort 10 dage"
+            }
+        ]
     }),
     actions: {
         setLocation(location) {
@@ -29,7 +73,8 @@ export const useCoursesStore = defineStore("courses", {
             .then((response) => {
                 this.currentPage = 1
                 this.setupParams()
-                this.setFilterCourses(response.data, this.location)
+                // this.setFilterCourses(response.data, this.location)
+                this.setFilteredCourses(this.mockData, this.location)
                 this.setTotalPages()
                 this.setPaginatedSlice()
                 this.initialized = true
@@ -45,7 +90,7 @@ export const useCoursesStore = defineStore("courses", {
             this.dataRefreshInterval = storeSettings.dataFromApi[this.location].dataRefreshInterval
             this.courseTimeout = storeSettings.dataFromApi[this.location].courseTimeout 
         },
-        setFilterCourses(responseData) {
+        setFilteredCourses(responseData) {
             let timestampNow = Date.now()
             let day = null
             let month = null
@@ -69,7 +114,7 @@ export const useCoursesStore = defineStore("courses", {
                 this.totalPages = Math.ceil(this.filteredCourses.length/this.linesPerPage)
                 this.showPages = true
             } else {
-                this.showPages(false)
+                this.showPages = false
             }
         },
         setPaginatedSlice() {

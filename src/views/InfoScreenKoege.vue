@@ -4,6 +4,7 @@ import { useSettingsStore } from '../stores/settings'
 import { useCoursesStore } from '../stores/courses'
 import infoList from '../components/infoList.vue'
 import marketingDisplay from '../components/marketingDisplay.vue'
+import Header from '../components/Header.vue'
 import { storeToRefs } from 'pinia'
 
 const store = useSettingsStore()
@@ -13,6 +14,7 @@ const { initialized } = storeToRefs(storeCourses)
 
 const location = locations.value.KOEGE
 const currentTime = ref(new Date())
+
 
 let timerDataRefresh = null
 
@@ -37,6 +39,7 @@ function refreshData() {
 </script>
 
 <template>
+  <Header></Header>
   <h1>Infoscreen Keep!</h1>
   <div v-if="initialized">
     <infoList :location="location"></infoList>
