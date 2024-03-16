@@ -46,17 +46,17 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <h1>Test af infoscreen</h1>
-        <div>
-          <div>
-            <table>
-              <thead>
-                <InfoLine v-for="(line, index) in paginatedSlice" :line="line" :key="index"></InfoLine>
-              </thead>
-            </table>
-            </div>
-            <p v-if="showPages"> {{ currentPage }} / {{ totalPages }}</p>
-        </div>
+  <div>
+    <div>
+      <h1>Test af infoscreen</h1>
+      <table>
+        <thead>
+          <InfoLine v-for="(line, index) in paginatedSlice" :line="line" :key="index"></InfoLine>
+        </thead>
+      </table>
+      </div>
+      <p v-if="showPages"> {{ currentPage }} / {{ totalPages }}</p>
+  </div>
 </template>
 
 <style scoped>

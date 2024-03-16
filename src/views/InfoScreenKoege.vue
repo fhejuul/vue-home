@@ -41,10 +41,12 @@ function refreshData() {
 <template>
   <Header></Header>
   <h1>Infoscreen Keep!</h1>
-  <div v-if="initialized">
+  <div v-if="initialized" class="grid grid-cols-2">
     <infoList :location="location"></infoList>
+    <div class="container">
+      <img src="../assets/images/koege.jpg" />
+    </div>
   </div>
-  <img src="../assets/images/koege.jpg" />
   <div v-if="marketingToggle">
     <marketingDisplay></marketingDisplay>
   </div>
