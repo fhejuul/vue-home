@@ -61,7 +61,9 @@ onBeforeUnmount(() => {
         </tbody>
       </table>
       </div>
-      <p v-if="showPages"> {{ currentPage }} / {{ totalPages }}</p>
+      <div>
+        <p class="text-center text-xl px-6 py-6" v-if="showPages"> Side {{ currentPage }} / {{ totalPages }}</p>
+      </div>
   </div>
 </template>
 
