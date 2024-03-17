@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div>
+  <div v-if="paginatedSlice.length > 0">
     <div class="px-4">
       <table class="border-collapse border table-fixed w-full">
         <thead>
@@ -69,10 +69,4 @@ onBeforeUnmount(() => {
 
 <style scoped>
 
-.infinite-list-container {
-    height: 100%;
-    overflow: auto;
-    position: relative;
-    -webkit-overflow-scrolling: touch;
-}
 </style>

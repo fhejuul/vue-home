@@ -50,13 +50,13 @@ function refreshData() {
     <div>  
       <DigitalClock></DigitalClock>
       <infoList :location="location"></infoList>
+      <div v-if="marketingToggle">
+        <marketingDisplay></marketingDisplay>
+      </div>
     </div>
     <div class="container px-4 py-6">
       <img src="../assets/images/koege.jpg" />
     </div>
-  </div>
-  <div v-if="marketingToggle">
-    <marketingDisplay></marketingDisplay>
   </div>
 </template>
 
