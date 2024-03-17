@@ -58,11 +58,11 @@ onBeforeUnmount(() => {
         </thead>
         <tbody>
           <InfoLine v-for="(line, index) in paginatedSlice" :line="line" :key="index"></InfoLine>
+          <tr v-if="showPages">
+            <td colspan="3" class="text-center">Side {{ currentPage }} / {{ totalPages }}</td>
+          </tr>
         </tbody>
       </table>
-      </div>
-      <div>
-        <p class="text-center text-xl px-6 py-6" v-if="showPages"> Side {{ currentPage }} / {{ totalPages }}</p>
       </div>
   </div>
 </template>

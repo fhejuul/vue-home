@@ -51,10 +51,11 @@ function refreshData() {
       <DigitalClock></DigitalClock>
       <infoList :location="location"></infoList>
       <div v-if="marketingToggle">
-        <marketingDisplay></marketingDisplay>
+        <marketingDisplay class="py-10"></marketingDisplay>
       </div>
     </div>
     <div class="container px-4 py-6">
+      <div class="h-[1000px] min-h-[1em] w-px bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400"></div>
       <img src="../assets/images/koege.jpg" />
     </div>
   </div>
