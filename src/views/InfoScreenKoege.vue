@@ -1,9 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useSettingsStore } from '../stores/settings'
 import { useCoursesStore } from '../stores/courses'
 import infoList from '../components/infoList.vue'
 import marketingDisplay from '../components/marketingDisplay.vue'
+import DigitalClock from '../components/DigitalClock.vue'
 import Header from '../components/Header.vue'
 import { storeToRefs } from 'pinia'
 
@@ -26,6 +27,11 @@ onMounted(() => {
   startTimerDataRefresh()
 })
 
+onBeforeUnmount(() => {
+  clearInterval(timerDataRefresh)
+})
+
+
 function startTimerDataRefresh(){
   timerDataRefresh = setInterval(() => {
     refreshData()
@@ -40,10 +46,12 @@ function refreshData() {
 
 <template>
   <Header></Header>
-  <h1>Infoscreen Keep!</h1>
   <div v-if="initialized" class="grid grid-cols-2">
-    <infoList :location="location"></infoList>
-    <div class="container">
+    <div>  
+      <DigitalClock></DigitalClock>
+      <infoList :location="location"></infoList>
+    </div>
+    <div class="container px-4 py-6">
       <img src="../assets/images/koege.jpg" />
     </div>
   </div>

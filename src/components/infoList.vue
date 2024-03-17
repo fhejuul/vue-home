@@ -47,12 +47,18 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-    <div>
-      <h1>Test af infoscreen</h1>
-      <table>
+    <div class="px-4">
+      <table class="border-collapse border table-fixed w-full">
         <thead>
-          <InfoLine v-for="(line, index) in paginatedSlice" :line="line" :key="index"></InfoLine>
+          <tr>
+            <th class="border w-1/6 py-4 text-3xl">Start</th>
+            <th class="border w-4/5 py-4 text-3xl">Kursus</th>
+            <th class="border w-1/6 py-4 text-3xl">Lokale</th>
+          </tr>
         </thead>
+        <tbody>
+          <InfoLine v-for="(line, index) in paginatedSlice" :line="line" :key="index"></InfoLine>
+        </tbody>
       </table>
       </div>
       <p v-if="showPages"> {{ currentPage }} / {{ totalPages }}</p>
