@@ -22,6 +22,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             hvidovre: {
@@ -33,6 +34,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             holbaek: {
@@ -44,10 +46,11 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             koege: {
-                courseTimeout: 360000000,
+                courseTimeout: 36000000000,
                 dataRefreshInterval: 360000,
                 linesPerPage: 4,
                 paginationInterval: 10000,
@@ -55,6 +58,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             roskildeAdmin: {
@@ -66,6 +70,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             roskildeB: {
@@ -77,6 +82,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
         },
@@ -90,6 +96,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             holbaek: {
@@ -101,6 +108,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             koege: {
@@ -112,6 +120,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             roskildeAdmin: {
@@ -123,6 +132,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
             roskildeB: {
@@ -134,6 +144,7 @@ export const useSettingsStore = defineStore("settings", {
                 fullMarketingDisplay: {
                     show: true,
                     duration: 10000,
+                    interval: 36000,
                 },
             },
         },

@@ -9,7 +9,7 @@ module.exports = {
       'juul': '#cb2027',
     }),
     fontFamily: {
-      sans: [ 'Tahoma', 'sans-serif'],
+      sans: [ 'Segoe ui', 'sans-serif'],
       serif: ['serif'],
     },
     extend: {},

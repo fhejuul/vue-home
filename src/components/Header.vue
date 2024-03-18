@@ -3,9 +3,9 @@
 </script>
 
 <template>
-    <div class="w-screen bg-juul">
-        <div>
-            <img class="h-28" src="../assets/images/logo.svg"/>
+    <div class="w-scree">
+        <div class="flex justify-end">
+            <img class="h-12 pe-24" src="../assets/images/logo.svg"/>
         </div>
     </div>
 </template > 

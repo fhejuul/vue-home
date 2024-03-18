@@ -9,9 +9,9 @@ defineProps({
 
 <template>
     <tr>
-        <td class="border text-center py-3 text-xl">{{ line.Starttid.slice(0,5) }}</td>
-        <td class="border px-6 py-3 text-xl">{{ line.Kursusnavn  }}</td>
-        <td class="border text-center py-3 text-xl">{{ line.Lokale }}</td>
+        <td class="border-b text-center py-3 text-xl">{{ line.Starttid.slice(0,5) }}</td>
+        <td class="border-b px-6 py-3 text-xl">{{ line.Kursusnavn  }}</td>
+        <td class="border-b text-center py-3 text-xl">{{ line.Lokale.slice(4) }}</td>
     </tr>
 </template>
 

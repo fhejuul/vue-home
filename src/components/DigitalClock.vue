@@ -6,6 +6,6 @@
 </script>
 <template>
     <div>
-        <h1 class="text-center text-5xl py-16">{{ currentTime }}</h1>
+        <h1 class="text-center text-5xl py-16">{{ currentTime.slice(0,5) }}</h1>
     </div>
 </template>

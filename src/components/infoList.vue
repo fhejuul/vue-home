@@ -48,12 +48,12 @@ onBeforeUnmount(() => {
 <template>
   <div v-if="paginatedSlice.length > 0">
     <div>
-      <table class="border-collapse border table-fixed w-full">
+      <table class="border-collapse table-fixed w-full">
         <thead>
           <tr>
-            <th class="border w-1/6 py-4 text-3xl">Start</th>
-            <th class="border w-4/5 py-4 text-3xl">Kursus</th>
-            <th class="border w-1/6 py-4 text-3xl">Lokale</th>
+            <th class="border-b w-1/6 py-4 text-3xl">Start</th>
+            <th class="border-b w-4/5 py-4 pl-6 text-3xl text-left">Kursus</th>
+            <th class="border-b w-1/6 py-4 text-3xl">Lokale</th>
           </tr>
         </thead>
         <tbody>

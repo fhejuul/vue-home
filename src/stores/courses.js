@@ -11,14 +11,9 @@ export const useCoursesStore = defineStore("courses", {
         end: 0,
         currentPage: 0,
         totalPages: 1,
-        linesPerPage: 10,
-        paginationTime: 10000,
-        dataRefreshInterval: 360000,
-        courseTimeout: 3600000,
         lokation: '',
         initialized: false,
         showPages: false,
-        test: "Courses store",
         mockData: [
             {
                 "Dato": "14-03-2024",
