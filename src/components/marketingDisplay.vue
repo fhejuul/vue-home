@@ -2,14 +2,19 @@
 import { useMarketingStore } from '../stores/marketing'
 import { storeToRefs } from 'pinia'
 
-const store = useMarketingStore()
-const { inlineDisplayUrl } = storeToRefs(store)
+const marketingStore = useMarketingStore()
+const { inlineDisplayUrl } = storeToRefs(marketingStore)
+
+const props = defineProps({
+  lokation: String,
+})
+
 
 </script>
 
 <template>
   <div class="flex justify-center">
-    <img :src="inlineDisplayUrl" />
+    <img :src="inlineDisplayUrl[props.lokation]" />
   </div>
 </template > 
 <style scoped>

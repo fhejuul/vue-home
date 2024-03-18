@@ -10,7 +10,7 @@ const apiClient = axios.create({
 })
 
 export default {
-  getLocation(name) {
+  getLokation(name) {
     return apiClient.get('/4')
   },
 }

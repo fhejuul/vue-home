@@ -10,10 +10,10 @@ import { storeToRefs } from 'pinia'
 
 const store = useSettingsStore()
 const storeCourses = useCoursesStore()
-const { locations, dataFromApi, marketingToggle } = storeToRefs(store)
-const { initialized } = storeToRefs(storeCourses)
+const { lokationer, dataFromApi } = storeToRefs(store)
+const { initialized, lokation } = storeToRefs(storeCourses)
 
-const location = locations.value.KOEGE
+const masterLokation = lokationer.value.KOEGE
 const currentTime = ref(new Date())
 
 
@@ -21,7 +21,7 @@ let timerDataRefresh = null
 
 onMounted(() => {
   currentTime.value = new Date()
-  storeCourses.setLocation(location)
+  storeCourses.setLokation(masterLokation)
   //store.getData() Todo: wait for backend
   storeCourses.getData()
   startTimerDataRefresh()
@@ -35,7 +35,7 @@ onBeforeUnmount(() => {
 function startTimerDataRefresh(){
   timerDataRefresh = setInterval(() => {
     refreshData()
-  }, dataFromApi.value[location].dataRefreshInterval)
+  }, dataFromApi.value[masterLokation].dataRefreshInterval)
 }
 
 function refreshData() {
@@ -47,16 +47,15 @@ function refreshData() {
 <template>
   <Header></Header>
   <div v-if="initialized" class="grid grid-cols-2">
-    <div>  
+    <div class="pl-14 pr-8">  
       <DigitalClock></DigitalClock>
-      <infoList :location="location"></infoList>
-      <div v-if="marketingToggle">
-        <marketingDisplay class="py-10"></marketingDisplay>
+      <infoList :lokation="masterLokation"></infoList>
+      <div v-if="dataFromApi.global.showInlineMarketing">
+        <marketingDisplay :lokation="masterLokation" class="py-14"></marketingDisplay>
       </div>
     </div>
-    <div class="container px-4 py-6">
-      <div class="h-[1000px] min-h-[1em] w-px bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400"></div>
-      <img src="../assets/images/koege.jpg" />
+    <div class="container pl-8 pr-14 py-14">
+      <img src="../assets/images/roskildeAdmin.svg" />
     </div>
   </div>
 </template>

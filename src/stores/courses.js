@@ -15,7 +15,7 @@ export const useCoursesStore = defineStore("courses", {
         paginationTime: 10000,
         dataRefreshInterval: 360000,
         courseTimeout: 3600000,
-        location: '',
+        lokation: '',
         initialized: false,
         showPages: false,
         test: "Courses store",
@@ -65,16 +65,16 @@ export const useCoursesStore = defineStore("courses", {
         ]
     }),
     actions: {
-        setLocation(location) {
-            this.location = location
+        setLokation(lokation) {
+            this.lokation = lokation
         },
         getData() {
-            courseService.getLocation(this.location)
+            courseService.getLokation(this.lokation)
             .then((response) => {
                 this.currentPage = 1
                 this.setupParams()
-                // this.setFilterCourses(response.data, this.location)
-                this.setFilteredCourses(this.mockData, this.location)
+                // this.setFilterCourses(response.data, this.lokation)
+                this.setFilteredCourses(this.mockData, this.lokation)
                 this.setTotalPages()
                 this.setPaginatedSlice()
                 this.initialized = true
@@ -85,10 +85,10 @@ export const useCoursesStore = defineStore("courses", {
         },
         setupParams(){
             const storeSettings = useSettingsStore()
-            this.linesPerPage = storeSettings.dataFromApi[this.location].linesPerPage
-            this.paginationTime = storeSettings.dataFromApi[this.location].paginationInterval
-            this.dataRefreshInterval = storeSettings.dataFromApi[this.location].dataRefreshInterval
-            this.courseTimeout = storeSettings.dataFromApi[this.location].courseTimeout 
+            this.linesPerPage = storeSettings.dataFromApi[this.lokation].linesPerPage
+            this.paginationTime = storeSettings.dataFromApi[this.lokation].paginationInterval
+            this.dataRefreshInterval = storeSettings.dataFromApi[this.lokation].dataRefreshInterval
+            this.courseTimeout = storeSettings.dataFromApi[this.lokation].courseTimeout 
         },
         setFilteredCourses(responseData) {
             let timestampNow = Date.now()

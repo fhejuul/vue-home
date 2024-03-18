@@ -1,18 +1,18 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount} from 'vue'
+import { useSettingsStore } from '../stores/settings'
 import { useCoursesStore } from '../stores/courses'
 import InfoLine from '../components/InfoLine.vue'
 import { storeToRefs } from 'pinia'
 
-defineProps({
-  location: {
-    type: String,
-    required: true,
-  },
+const props = defineProps({
+  lokation: String,
 })
 
+const settingsStore = useSettingsStore()
 const coursesStore = useCoursesStore()
 
+const { dataFromApi } = storeToRefs(settingsStore)
 const { paginatedSlice, paginationTime, dataRefreshInterval, currentPage, totalPages, showPages } = storeToRefs(coursesStore)
 let timerPageTurn = null
 let timerDataRefresh = null
@@ -23,13 +23,13 @@ function startTimerPageTurn(){
     if (showPages.value) {
       coursesStore.turnPage()
     }
-  }, paginationTime.value)
+  }, dataFromApi.value[props.lokation].paginationInterval)
 }
 
 function startTimerDataRefresh(){
   timerDataRefresh = setInterval(() => {
     coursesStore.getData()
-  }, dataRefreshInterval.value)
+  }, dataFromApi.value[props.lokation].dataRefreshInterval)
 }
 
 
@@ -47,7 +47,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div v-if="paginatedSlice.length > 0">
-    <div class="px-4">
+    <div>
       <table class="border-collapse border table-fixed w-full">
         <thead>
           <tr>
@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
         <tbody>
           <InfoLine v-for="(line, index) in paginatedSlice" :line="line" :key="index"></InfoLine>
           <tr v-if="showPages">
-            <td colspan="3" class="text-center">Side {{ currentPage }} / {{ totalPages }}</td>
+            <td colspan="3" class="text-center py-2">Side {{ currentPage }} / {{ totalPages }}</td>
           </tr>
         </tbody>
       </table>
